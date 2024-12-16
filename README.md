@@ -10,3 +10,9 @@ const DB_NAME = "nom de la BDD";
 const DB_USER = "login de la BDD";
 const DB_PASSWORD = "password de la BDD";
 ```
+1 installer le projet :
+Saisir la commande ci-dessous dans la console :
+
+```bash
+composer install
+```
