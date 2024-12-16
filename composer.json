@@ -1,0 +1,9 @@
+{
+    "name": "mithridatem/tpapi",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    }
+}
