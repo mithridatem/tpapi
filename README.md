@@ -1,5 +1,5 @@
 # tpapi
-Pour utiliser ce projet vous devez créer un fichier env.local.php à la racine
+Pour utiliser ce projet vous devez créer un fichier **env.local.php** à la racine
 Il va contenir :
 ```php
 <?php

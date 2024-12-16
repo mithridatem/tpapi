@@ -2,7 +2,7 @@
 //chargement de l'autoloader de composer
 require_once './vendor/autoload.php';
 //chargement des variables d'environnement
-//require_once './env.local.php';
+require_once './env.local.php';
 
 //utilisation de session_start(pour gérer la connexion au serveur)
 session_start();
