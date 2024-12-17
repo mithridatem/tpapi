@@ -16,49 +16,50 @@ $path = $url['path'] ??  '/';
 
 //Récupération de la méthode de la requête
 $requestMethod = $_SERVER['REQUEST_METHOD'];
-//dd(trim($path, BASE_URL ));
+
+//Récupération du token JWT
+$bearer = isset($_SERVER['HTTP_AUTHORIZATION'])?preg_replace(
+    '/Bearer\s+/',
+    '',
+    $_SERVER['HTTP_AUTHORIZATION']
+):null;
+
 //importer les classes
 use App\Controller\UserController;
 use App\Utils\Tools;
 
-//instance du controller
+//instance des Controllers
 $userController = new UserController();
 
 //routeur
 switch (substr($path, strlen(BASE_URL))) {
     case '':
-        Tools::JsonResponse(["Message"=>"Bienvenue sur notre API"], 200);
+        Tools::JsonResponse(["Message" => "Bienvenue sur notre API"], 200);
         break;
     case 'user':
         //Test de la méthode de la requête
-        if($requestMethod === 'POST') {
+        if ($requestMethod === 'POST') {
             $userController->save();
-        }
-        else if($requestMethod === 'GET') {
+        } else if ($requestMethod === 'GET') {
             $userController->showAll();
-        }
-        else if ($requestMethod === 'DELETE') {
-            Tools::JsonResponse(["Message"=>"Suppression de tous les utilisateurs"], 200);
-        }
-        else {
-            Tools::JsonResponse(["Message"=>"Méthode non autorisée"], 405);
+        } else if ($requestMethod === 'DELETE') {
+            Tools::JsonResponse(["Message" => "Suppression de tous les utilisateurs"], 200);
+        } else {
+            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
         }
         break;
-    case 'user/id': 
-        if($requestMethod === 'GET') {
+    case 'user/id':
+        if ($requestMethod === 'GET') {
             $userController->showUser();
-        }
-        else if($requestMethod === 'PATCH') {
-            Tools::JsonResponse(["Message"=>"Utilisateur mis à jour par son id"], 200);
-        }
-        else if($requestMethod === 'DELETE') {
-            Tools::JsonResponse(["Message"=>"Utilisateur supprimé par son id"], 200);
-        }
-        else {
-            Tools::JsonResponse(["Message"=>"Méthode non autorisée"], 405);
+        } else if ($requestMethod === 'PATCH') {
+            Tools::JsonResponse(["Message" => "Utilisateur mis à jour par son id"], 200);
+        } else if ($requestMethod === 'DELETE') {
+            Tools::JsonResponse(["Message" => "Utilisateur supprimé par son id"], 200);
+        } else {
+            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
         }
         break;
     default:
-        Tools::JsonResponse(["Message"=>"Erreur 404"], 404);
+        Tools::JsonResponse(["Message" => "Erreur 404"], 404);
         break;
 }
