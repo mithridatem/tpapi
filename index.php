@@ -25,7 +25,7 @@ use App\Utils\Tools;
 $userController = new UserController();
 
 //routeur
-switch ( substr($path, strlen(BASE_URL))) {
+switch (substr($path, strlen(BASE_URL))) {
     case '':
         Tools::JsonResponse(["Message"=>"Bienvenue sur notre API"], 200);
         break;
@@ -35,10 +35,25 @@ switch ( substr($path, strlen(BASE_URL))) {
             $userController->save();
         }
         else if($requestMethod === 'GET') {
-            Tools::JsonResponse(["Message"=>"Listes de tous les utilsiateurs"], 200);
+            $userController->showAll();
+            
         }
         else if ($requestMethod === 'DELETE') {
             Tools::JsonResponse(["Message"=>"Suppression de tous les utilisateurs"], 200);
+        }
+        else {
+            Tools::JsonResponse(["Message"=>"Méthode non autorisée"], 405);
+        }
+        break;
+    case 'user/id': 
+        if($requestMethod === 'GET') {
+            $userController->showUser();
+        }
+        else if($requestMethod === 'PATCH') {
+            Tools::JsonResponse(["Message"=>"Utilsiateur mis à jour par son id"], 200);
+        }
+        else if($requestMethod === 'DELETE') {
+            Tools::JsonResponse(["Message"=>"Utilisateur supprimé par son id"], 200);
         }
         else {
             Tools::JsonResponse(["Message"=>"Méthode non autorisée"], 405);

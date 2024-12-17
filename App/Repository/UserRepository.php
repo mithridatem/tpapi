@@ -52,4 +52,26 @@ class UserRepository
         }
         return $user;
     }
+
+    public function findAll() :array {
+        try {
+            //requête SQL
+            $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u";
+            //préparation de la requête
+            $requete = self::$bdd->prepare($sql);
+            //execution de la requête
+            $requete->execute();
+            //paramétrer le mode de récupération
+            $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
+            $users = $requete->fetchAll();
+            return $users;
+        }
+        catch(\PDOException $e) {
+            die("Error" . $e->getMessage());
+        }
+    }
+
+    public function find(int $id) : User {
+        return new User();
+    }
 }

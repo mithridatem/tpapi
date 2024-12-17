@@ -80,4 +80,25 @@ class User
         return $this->firstname . ' ' . $this->lastname; 
     }
 
+        //méthode qui hydrate en objet User
+    public function hydrate(array $data) :self {
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+        return $this;
+    }
+
+    //Méthode qui de hydrate l'objet User
+    public function toArray() :array {
+        return [
+            'id' => $this->id,
+            'lastname' => $this->lastname,
+            'firstname' => $this->firstname,
+            'email' => $this->email,
+            'password' => $this->password ?? "vide"    
+        ];           
+    }
 }
