@@ -17,7 +17,8 @@ class UserRepository
     }
 
 
-    //Méthode 
+    //Méthodes
+    //Méthode pour ajouter un utilisateur en BDD 
     public function add(User $user): User
     {
         try {
@@ -53,7 +54,8 @@ class UserRepository
         return $user;
     }
 
-    public function findAll() :array {
+    public function findAll(): array
+    {
         try {
             //requête SQL
             $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u";
@@ -62,52 +64,40 @@ class UserRepository
             //execution de la requête
             $requete->execute();
             //paramétrer le mode de récupération
-            $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
+            $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, User::class);
             $users = $requete->fetchAll();
             return $users;
-        }
-        catch(\PDOException $e) {
+        } catch (\PDOException $e) {
             die("Error" . $e->getMessage());
         }
     }
 
-    public function find(int $id) : User {
+    public function find(int $id): User | bool
+    {
         try {
             $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u WHERE u.id = ?";
             $requete = self::$bdd->prepare($sql);
             $requete->bindParam(1, $id, \PDO::PARAM_INT);
             $requete->execute();
-            $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
+            $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, User::class);
             $user = $requete->fetch();
-           
-            //Tester si l'utilisateur existe
-            if(!$user){
-                $user = new User();
-                $user->setLastname("vide");
-            }
             return $user;
-        }
-        catch(\PDOException $e) {
+        } catch (\PDOException $e) {
             die("Error" . $e->getMessage());
         }
     }
 
-    public function findEmail(string $email) : User | bool{
+    public function findEmail(string $email): User | bool
+    {
         try {
             $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u WHERE u.email= ?";
             $requete = self::$bdd->prepare($sql);
             $requete->bindParam(1, $email, \PDO::PARAM_STR);
             $requete->execute();
-            $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
+            $requete->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, User::class);
             $user = $requete->fetch();
-            
-            //Tester si l'utilisateur existe
-            if($user){
-                return true;
-            }
-            return false;
-        }
-        catch(\PDOException $e) {
+            return $user;
+        } catch (\PDOException $e) {
             die("Error" . $e->getMessage());
         }
     }

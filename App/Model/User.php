@@ -65,7 +65,7 @@ class User
     }
 
     //Méthodes
-    //Méthodes qui hash le password avec bcript	
+    //Méthodes qui hash le password avec Bcrypt	
     public function hashPassword() :void {
         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
     }
@@ -80,7 +80,7 @@ class User
         return $this->firstname . ' ' . $this->lastname; 
     }
 
-        //méthode qui hydrate en objet User
+    //méthode qui hydrate en objet User
     public function hydrate(array $data) :self {
         foreach ($data as $key => $value) {
             $method = 'set' . ucfirst($key);
@@ -91,14 +91,15 @@ class User
         return $this;
     }
 
-    //Méthode qui de hydrate l'objet User
+    //Méthode qui deshydrate l'objet User en tableau
     public function toArray() :array {
-        return [
-            'id' => $this->id,
-            'lastname' => $this->lastname,
-            'firstname' => $this->firstname,
-            'email' => $this->email,
-            'password' => $this->password ?? "vide"    
-        ];           
+        $user = [];
+        foreach ($this as $key => $value) {
+            $method = 'get' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $user[$key] = $this->$method();
+            }
+        }
+        return $user;         
     }
 }
