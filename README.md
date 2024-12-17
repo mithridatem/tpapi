@@ -11,20 +11,26 @@ const DB_USER = "login de la BDD";
 const DB_PASSWORD = "password de la BDD";
 //base URL
 const BASE_URL = '/tpapi/';
+
 ```
-1 installer le projet :
+
+1 Générer la BDD avec le script bdd.sql
+
+2 installer le projet :
 Saisir la commande ci-dessous dans la console :
 
 ```bash
 composer install
 ```
-2 Générer vos clés de chiffrement
+
+3 Générer vos clés de chiffrement
 Saisir la commande ci-dessous dans la console :
 ```bash
 openssl genrsa -out private.pem 2048
 openssl rsa -in private.pem -pubout -out public.pem
 ```
-3 Modifier le fichier env.local.php
+
+4 Modifier le fichier env.local.php
 Ajouter les lignes ci-dessous :
 ```php
 //Temps de validitée du token JWT en minutes
