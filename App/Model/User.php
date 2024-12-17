@@ -18,23 +18,23 @@ class User
 
 
     //Getters
-    public function getId(): null|int {
+    public function getId(): int | null{
         return $this->id;
     }
 
-    public function getLastname() :null|string{
+    public function getLastname() :string|null {
         return $this->lastname;
     }
 
-    public function getFirstname() :null|string{
+    public function getFirstname() : string|null{
         return $this->firstname;
     }
 
-    public function getEmail() : null|string {
+    public function getEmail() : string|null {
         return $this->email;
     }
 
-    public function getPassword() :null|string{
+    public function getPassword() :string |null{
         return $this->password;
     }
 

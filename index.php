@@ -36,7 +36,6 @@ switch (substr($path, strlen(BASE_URL))) {
         }
         else if($requestMethod === 'GET') {
             $userController->showAll();
-            
         }
         else if ($requestMethod === 'DELETE') {
             Tools::JsonResponse(["Message"=>"Suppression de tous les utilisateurs"], 200);
@@ -50,7 +49,7 @@ switch (substr($path, strlen(BASE_URL))) {
             $userController->showUser();
         }
         else if($requestMethod === 'PATCH') {
-            Tools::JsonResponse(["Message"=>"Utilsiateur mis à jour par son id"], 200);
+            Tools::JsonResponse(["Message"=>"Utilisateur mis à jour par son id"], 200);
         }
         else if($requestMethod === 'DELETE') {
             Tools::JsonResponse(["Message"=>"Utilisateur supprimé par son id"], 200);

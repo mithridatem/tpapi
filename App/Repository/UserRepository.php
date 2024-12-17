@@ -72,7 +72,43 @@ class UserRepository
     }
 
     public function find(int $id) : User {
-        //écrire le code de la requête SQL
-        return new User();
+        try {
+            $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u WHERE u.id = ?";
+            $requete = self::$bdd->prepare($sql);
+            $requete->bindParam(1, $id, \PDO::PARAM_INT);
+            $requete->execute();
+            $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
+            $user = $requete->fetch();
+           
+            //Tester si l'utilisateur existe
+            if(!$user){
+                $user = new User();
+                $user->setLastname("vide");
+            }
+            return $user;
+        }
+        catch(\PDOException $e) {
+            die("Error" . $e->getMessage());
+        }
+    }
+
+    public function findEmail(string $email) : User | bool{
+        try {
+            $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u WHERE u.email= ?";
+            $requete = self::$bdd->prepare($sql);
+            $requete->bindParam(1, $e, \PDO::PARAM_STR);
+            $requete->execute();
+            $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
+            $user = $requete->fetch();
+
+            //Tester si l'utilisateur existe
+            if($user){
+                return false;
+            }
+            return true;
+        }
+        catch(\PDOException $e) {
+            die("Error" . $e->getMessage());
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\User;
 use App\Repository\UserRepository;
 use App\Utils\Tools;
 
@@ -16,7 +17,28 @@ class UserController
 
     public function save()
     {
-        Tools::JsonResponse(["message"=>"Un compte a été ajouté avec succés"], 201);
+        //récupérer le body de la requête
+        $json = Tools::getBody();
+        
+        if($json == '""'){
+            Tools::JsonResponse(["message"=>"Le corps de la requête est vide"], 400);
+            exit;
+        }
+        $tab = json_decode($json, true);
+        //dd($tab);
+        $user = new User();
+        //on hydrate l'objet User
+        $user->hydrate($tab);
+        //on hash le password
+        $user->hashPassword();
+    
+        if(!$this->repository->findEmail($user->getEmail())) {
+            Tools::JsonResponse(["Message"=>"Cet email existe déjà"], 400);
+            exit;
+        }
+        //je crée le compte
+        $newUser = $this->repository->add($user);
+        Tools::JsonResponse(["Utilisateur"=>$newUser->toArray()], 200);
     }
 
 
@@ -36,7 +58,7 @@ class UserController
             //ajouter au tableau $userTab la objet transformé en tableau
             $userTab[] = $user->toArray();
         }
-        //retourne un  Réponse JSON
+        //retourne une Réponse JSON
         Tools::JsonResponse(["Utilisateurs"=>$userTab], 200);
     }
 
@@ -44,11 +66,19 @@ class UserController
     {
         //Tester si les paramétres de l'url existent (get => id)
         if (isset($_GET["id"])) {
-            //Appeler la méthode find de UserRepository
-            dd($_GET["id"]);
-        } else {
+            $user = $this->repository->find($_GET["id"]);
+    
+            if($user->getLastname() === "vide") {
+                //retourner une Reponse JSON avec un message et une erreur 404
+                Tools::JsonResponse(["Message"=>"Utilisateur non trouvé"], 404);
+                exit;
+            }
+            Tools::JsonResponse(["users"=>$user->toArray()], 200);
+        } 
+        //sinon
+        else {
             //retourner une Reponse JSON avec un message et une erreur 404
-            dd("Le paramétre id n'existe pas");
+            Tools::JsonResponse(["Erreur"=>"Le paramètre n'existe pas"], 400);
         }
     }
 }
