@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Utils\Tools;
 
 class UserController
 {
@@ -14,6 +15,6 @@ class UserController
     }
 
     public function save(){
-        echo 'ajout utilisateur depuis le controller';
+        Tools::JsonResponse(["message"=>"Un compte a été ajouté avec succés"], 201);
     }
 }

@@ -11,10 +11,11 @@ class User
     private ?string $firstname;
     private ?string $email;
     private ?string $password;
-
+    
     //Constructeur
 
     public function __construct(){}
+
 
     //Getters
     public function getId(): null|int {

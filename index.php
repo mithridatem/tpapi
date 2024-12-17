@@ -30,6 +30,6 @@ switch ($path) {
         $userController->save();
         break;
     default:
-        echo "erreur 404";
+        Tools::JsonResponse(["Message"=>"Erreur 404"], 404);
         break;
 }
