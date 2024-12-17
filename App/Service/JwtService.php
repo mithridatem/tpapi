@@ -9,10 +9,13 @@ use Firebase\JWT\Key;
 
 class JwtService
 {
+
+    //Attributs
+    private readonly string $key;
+    private readonly UserRepository $userRepository;
+
     //Constructeur
-    public function __construct(
-        private readonly string $key,
-        private readonly UserRepository $userRepository
+    public function __construct(     
     ) {
         $this->key = TOKEN_SECRET_KEY;
         $this->userRepository = new UserRepository();
@@ -25,7 +28,9 @@ class JwtService
         $email = Tools::sanitize($email);
         $password = Tools::sanitize($password);
         $user = $this->userRepository->findEmail($email);
+        //test si l'utilisateur existe 
         if ($user) {
+            //test si le mot de passe est correct
             if ($user->verifPassword($password)) {
                 return true;
             }

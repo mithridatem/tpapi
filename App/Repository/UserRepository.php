@@ -92,7 +92,7 @@ class UserRepository
     public function findEmail(string $email): User | bool
     {
         try {
-            $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u WHERE u.email= ?";
+            $sql = "SELECT u.id, u.lastname, u.firstname, u.email, u.password FROM user AS u WHERE u.email= ?";
             $requete = self::$bdd->prepare($sql);
             $requete->bindParam(1, $email, \PDO::PARAM_STR);
             $requete->execute();
