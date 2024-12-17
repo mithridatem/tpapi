@@ -18,3 +18,9 @@ Saisir la commande ci-dessous dans la console :
 ```bash
 composer install
 ```
+2 Générer vos clés de chiffrement
+Saisir la commande ci-dessous dans la console :
+```bash
+openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -pubout -out public.pem
+```
