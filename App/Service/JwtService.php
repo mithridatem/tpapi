@@ -15,8 +15,8 @@ class JwtService
     private readonly UserRepository $userRepository;
 
     //Constructeur
-    public function __construct(     
-    ) {
+    public function __construct()
+    {
         $this->key = TOKEN_SECRET_KEY;
         $this->userRepository = new UserRepository();
     }

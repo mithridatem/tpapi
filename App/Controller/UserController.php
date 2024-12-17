@@ -130,4 +130,26 @@ class UserController
             Tools::JsonResponse(["Message" => "Email et ou mot de passe incorrect ou absent"], 403);
         }
     }
+
+    //Méthode pour vérifier le token JWT
+    public function verifyToken(?string $bearer) {
+        //tester si le token est vide
+        if ($bearer == null) {
+            //retourne une Réponse JSON
+            Tools::JsonResponse(["Message" => "Token absent"], 400);
+            exit;
+        }
+        //recupération de la verif du token
+        $verif = $this->jwtService->verifyToken($bearer);
+        //tester si le token est valide
+        if ($verif === true) {
+            //retourne une Réponse JSON
+            Tools::JsonResponse(["Message" => "Token valide"], 200);
+        }
+        //Sinon je retourne l'erreur du token
+        else {
+            //retourne une Réponse JSON
+            Tools::JsonResponse(["Message" => $verif], 403);
+        }
+    }
 }

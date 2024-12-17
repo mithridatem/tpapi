@@ -77,9 +77,13 @@ switch (substr($path, strlen(BASE_URL))) {
         break;
         //Endpoint token JWT
     case 'user/token':
-        //Test de la méthode POST
+        //Test de la méthode POST(recupération du token JWT)
         if ($requestMethod === 'POST') {
             $userController->getUserToken();
+        }
+        //test de la méthode GET (vérification du token JWT)
+        else if ($requestMethod === 'GET') {
+            $userController->verifyToken($bearer);
         }
         //Sinon la méthode n'est pas autorisée
         else {
