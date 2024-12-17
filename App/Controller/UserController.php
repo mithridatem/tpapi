@@ -46,7 +46,9 @@ class UserController
         if ($test) {
             $message = ["Message" => "Cet email existe déjà"];
             $statusCode = 400;
-        } else {
+        } 
+        //Sinon on crée le compte
+        else {
             //on crée le compte
             $newUser = $this->repository->add($user);
             $message = $newUser->toArray();
