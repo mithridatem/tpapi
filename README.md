@@ -40,4 +40,5 @@ const TOKEN_KEY = "coller-ici le contenu de votre clé publique"
 ```
 
 5 Tester les EndPoints API avec bruno
+
 Importer le dossier api dans Bruno (racine du projet -> importer une collection)
