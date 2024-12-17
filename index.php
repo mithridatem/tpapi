@@ -6,9 +6,9 @@ require_once './env.local.php';
 //chargement de l'autoloader de composer
 require_once './vendor/autoload.php';
 
-
 //utilisation de session_start(pour gérer la connexion au serveur)
 session_start();
+
 //Analyse de l'URL avec parse_url() et retourne ses composants
 $url = parse_url($_SERVER['REQUEST_URI']);
 //test si l'url posséde une route sinon on renvoi à la racine
