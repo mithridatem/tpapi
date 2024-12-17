@@ -7,7 +7,7 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Si ce n'est pas un fichier
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)$ index.php [QSA,L]
-# Régle de sécurité filtrage des fichiers sensibles
+# Régles de sécurité : filtrage des fichiers sensibles
 <Files ~ "(.txt|.md|.log|.pem|.sql|.htacess|.json|.lock)$">
    Require all denied
 </Files>

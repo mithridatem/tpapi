@@ -24,3 +24,10 @@ Saisir la commande ci-dessous dans la console :
 openssl genrsa -out private.pem 2048
 openssl rsa -in private.pem -pubout -out public.pem
 ```
+3 Modifier le fichier env.local.php
+Ajouter les lignes ci-dessous :
+```php
+//Temps de validitée du token JWT en minutes
+const TOKEN_VALIDITY = 60;
+//Clé de chiffrement du token JWT
+const TOKEN_KEY = "coller-ici le contenu de votre clé publique"
