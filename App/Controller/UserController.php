@@ -23,133 +23,154 @@ class UserController
     //Méthode pour créer un utilisateur
     public function save()
     {
+        $message = [];
+        $statusCode = 200;
         //récupérer le body de la requête
         $json = Tools::getBody();
         //tester si le json est vide
         if ($json == '""') {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["message" => "Le corps de la requête est vide"], 400);
-            exit;
+            $message = ["message" => "Le corps de la requête est vide"];
+            $statusCode = 400;
         }
         //décoder le json en tableau associatif
-        $tab = json_decode($json, true);
+        $dataUser = json_decode($json, true);
         //nettoyer le tableau
-        $tab = Tools::sanitizeArray($tab);
-        //créer un objet User
-        $user = new User();
-        //on hydrate l'objet User
-        $user->hydrate($tab);
+        $dataUser = Tools::sanitizeArray($dataUser);
+        //créer un objet User et on l'hydrate
+        $user = (new User())->hydrate($dataUser);
         //on hash le password
         $user->hashPassword();
         //on récupérer si le compte existe déjà
         $test = $this->repository->findEmail($user->getEmail());
         //tester si le compte existe déjà
         if ($test) {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["Message" => "Cet email existe déjà"], 400);
-            exit;
+            $message = ["Message" => "Cet email existe déjà"];
+            $statusCode = 400;
+        } else {
+            //on crée le compte
+            $newUser = $this->repository->add($user);
+            $message = $newUser->toArray();
         }
-        //on crée le compte
-        $newUser = $this->repository->add($user);
         //retourne une Réponse JSON
-        Tools::JsonResponse(["Utilisateur" => $newUser->toArray()], 200);
+        Tools::JsonResponse($message, $statusCode);
     }
 
     //Méthode pour afficher tous les utilisateurs
     public function showAll(): void
     {
+        $message = [];
+        $statusCode = 200;
         //Tableau d'objets User
         $users = $this->repository->findAll();
         //Tester si le tableau est vide
         if (empty($users)) {
-            //retourne un  Réponse JSON
-            Tools::JsonResponse(["Message" => "Aucun utilisateur trouvé"], 404);
-            exit;
+            $message = ["Message" => "Aucun utilisateur trouvé"];
+            $statusCode = 404;
+        } else {
+            //Stocker les tableaux d'utilisateurs
+            $userTab = [];
+            //boucle sur le tableau d'objets User
+            foreach ($users as $user) {
+                //ajouter au tableau $userTab la objet transformé en tableau
+                $userTab[] = $user->toArray();
+            }
+            $message = $userTab;
         }
-        //Stocker les tableaux d'utilisateurs
-        $userTab = [];
-        //boucle sur le tableau d'objets User
-        foreach ($users as $user) {
-            //ajouter au tableau $userTab la objet transformé en tableau
-            $userTab[] = $user->toArray();
-        }
+
         //retourne une Réponse JSON
-        Tools::JsonResponse($userTab, 200);
+        Tools::JsonResponse($message, $statusCode);
     }
 
     //Méthode pour afficher un utilisateur par son id
     public function showUser(): void
     {
+        $message = [];
+        $statusCode = 200;
         //Tester si les paramétres de l'url existent (get => id)
         if (isset($_GET["id"])) {
             $user = $this->repository->find($_GET["id"]);
             //test si l'utilisateur n'existe pas
             if (!$user) {
-                //retourner une Reponse JSON avec un message et une erreur 404
-                Tools::JsonResponse(["Message" => "Utilisateur non trouvé"], 404);
-                exit;
+                $message = ["Message" => "Utilisateur non trouvé"];
+                $statusCode = 404;
             }
-            Tools::JsonResponse($user->toArray(), 200);
+            //Sinon on retourne l'utilisateur
+            else {
+                $message = $user->toArray();
+            }
         }
         //sinon
         else {
             //retourner une Reponse JSON avec un message et une erreur 404
-            Tools::JsonResponse(["Erreur" => "Le paramètre id n'existe pas"], 400);
+            $message = ["Erreur" => "Le paramètre id n'existe pas"];
+            $statusCode = 404;
         }
+        Tools::JsonResponse($message, $statusCode);
     }
 
     //Méthode pour Récupérer le token JWT
     public function getUserToken()
     {
+        $message = [];
+        $statusCode = 200;
         //récupérer le body de la requête
         $json = Tools::getBody();
         //tester si le json est vide
         if ($json == '""') {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["message" => "Le corps de la requête est vide"], 400);
-            exit;
+            $message = ["message" => "Le corps de la requête est vide"];
+            $statusCode = 400;
         }
-        //décoder le json en tableau associatif
-        $tab = json_decode($json, true);
-        //nettoyer le tableau
-        $tab = Tools::sanitizeArray($tab);
-        //verif authentification
-        if (
-            isset($tab["email"]) and
-            isset($tab["password"]) and
-            $this->jwtService->authentification($tab["email"], $tab["password"])
-        ) {
-            //génération du token
-            $token = $this->jwtService->genToken($tab["email"]);
-            //retourne une Réponse JSON avec le token JWT
-            Tools::JsonResponse(["Token" => $token], 200);
-        }
-        //Sinon je retourne une erreur
+        //Traitement du json
         else {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["Message" => "Email et ou mot de passe incorrect ou absent"], 403);
+            //décoder le json en tableau associatif
+            $tab = json_decode($json, true);
+            //nettoyer le tableau
+            $tab = Tools::sanitizeArray($tab);
+            //verif authentification
+            if (
+                isset($tab["email"]) and
+                isset($tab["password"]) and
+                $this->jwtService->authentification($tab["email"], $tab["password"])
+            ) {
+                //génération du token
+                $token = $this->jwtService->genToken($tab["email"]);
+                $message = ["Token" => $token];
+            }
+            //Sinon je retourne une erreur
+            else {
+                $message = ["Message" => "Email et ou mot de passe incorrect ou absent"];
+                $statusCode = 403;
+            }
         }
+        //retourne une Réponse JSON
+        Tools::JsonResponse($message, $statusCode);
     }
 
     //Méthode pour vérifier le token JWT
-    public function verifyToken(?string $bearer) {
+    public function verifyToken(?string $bearer)
+    {
+        $message = [];
+        $statusCode = 200;
         //tester si le token est vide
         if ($bearer == null) {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["Message" => "Token absent"], 400);
-            exit;
-        }
-        //recupération de la verif du token
-        $verif = $this->jwtService->verifyToken($bearer);
-        //tester si le token est valide
-        if ($verif === true) {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["Message" => "Token valide"], 200);
-        }
-        //Sinon je retourne l'erreur du token
+            $message = ["Message" => "Token absent"];
+            $statusCode = 400;
+        } 
+        //sinon
         else {
-            //retourne une Réponse JSON
-            Tools::JsonResponse(["Message" => $verif], 403);
+            //recupération de la verif du token
+            $verif = $this->jwtService->verifyToken($bearer);
+            //tester si le token est valide
+            if ($verif === true) {
+                $message = ["Message" => "Token valide"];
+            }
+            //Sinon je retourne l'erreur du token
+            else {
+                $message = ["Message" => $verif];
+                $statusCode = 403;
+            }
         }
+         //retourne une Réponse JSON
+         Tools::JsonResponse($message, $statusCode);
     }
 }
