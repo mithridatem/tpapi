@@ -14,7 +14,8 @@ class UserController
         $this->repository = new UserRepository();
     }
 
-    public function save(){
+    public function save()
+    {
         Tools::JsonResponse(["message"=>"Un compte a été ajouté avec succés"], 201);
     }
 }

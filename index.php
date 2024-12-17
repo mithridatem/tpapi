@@ -14,6 +14,9 @@ $url = parse_url($_SERVER['REQUEST_URI']);
 //test si l'url posséde une route sinon on renvoi à la racine
 $path = $url['path'] ??  '/';
 
+//Récupération de la méthode de la requête
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+
 //importer les classes
 use App\Controller\UserController;
 use App\Utils\Tools;
@@ -22,12 +25,24 @@ use App\Utils\Tools;
 $userController = new UserController();
 
 //routeur
-switch ($path) {
-    case '/tpapi/':
+switch (trim($path, BASE_URL )) {
+    case '':
         Tools::JsonResponse(["Message"=>"Bienvenue sur notre API"], 200);
         break;
-    case '/tpapi/user':
-        $userController->save();
+    case 'user':
+        //Test de la méthode de la requête
+        if($requestMethod === 'POST') {
+            $userController->save();
+        }
+        else if($requestMethod === 'GET') {
+            Tools::JsonResponse(["Message"=>"Listes de tous les utilsiateurs"], 200);
+        }
+        else if ($requestMethod === 'DELETE') {
+            Tools::JsonResponse(["Message"=>"Suppression de tous les utilisateurs"], 200);
+        }
+        else {
+            Tools::JsonResponse(["Message"=>"Méthode non autorisée"], 405);
+        }
         break;
     default:
         Tools::JsonResponse(["Message"=>"Erreur 404"], 404);
