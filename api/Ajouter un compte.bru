@@ -1,0 +1,20 @@
+meta {
+  name: Ajouter un compte
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost/tpapi/user
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "lastname":"Mithridate",
+    "firstname":"Mathieu",
+    "email":"mathieu@test.com",
+    "password":"1234"
+  }
+}

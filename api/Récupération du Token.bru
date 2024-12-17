@@ -1,0 +1,18 @@
+meta {
+  name: Récupération du Token
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost/tpapi/user/token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email":"mathieu@test.com",
+    "password":"1234"
+  }
+}
