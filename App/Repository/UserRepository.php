@@ -72,6 +72,7 @@ class UserRepository
     }
 
     public function find(int $id) : User {
+        //écrire le code de la requête SQL
         return new User();
     }
 }
