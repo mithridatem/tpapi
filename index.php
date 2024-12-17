@@ -1,4 +1,5 @@
 <?php
+
 //chargement de l'autoloader de composer
 require_once './vendor/autoload.php';
 //chargement des variables d'environnement
@@ -11,16 +12,15 @@ $url = parse_url($_SERVER['REQUEST_URI']);
 //test si l'url posséde une route sinon on renvoi à la racine
 $path = $url['path'] ??  '/';
 
-//importer le repository
 //importer le UserController
 use App\Controller\UserController;
-
+use App\Utils\Tools;
 $userController = new UserController();
 
 //routeur
 switch ($path) {
     case '/tpapi/':
-        echo 'Bienvenue';
+        Tools::JsonResponse(["Message"=>"Bienvenue sur notre API","Valeur"=>"Mathieu"], 403);
         break;
     case '/tpapi/user':
         $userController->save();

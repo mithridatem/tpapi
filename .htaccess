@@ -7,3 +7,11 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # Si ce n'est pas un fichier
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.+)$ index.php [QSA,L]
+<Files "*.md">
+order deny,allow
+deny from all
+</Files>
+<Files "*.txt">
+order deny,allow
+deny from all
+</Files>
