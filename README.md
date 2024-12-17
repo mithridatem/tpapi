@@ -1,5 +1,7 @@
 # tpapi
-Pour utiliser ce projet vous devez créer un fichier **env.local.php** à la racine
+Pour utiliser ce projet vous devez 
+
+- 1 créer un fichier **env.local.php** à la racine
 
 Il va contenir :
 
@@ -16,9 +18,9 @@ const BASE_URL = '/tpapi/';
 
 ```
 
-- 1 Générer la BDD avec le script bdd.sql
+- 2 Générer la BDD avec le script **bdd.sql**
 
-- 2 installer le projet :
+- 3 installer le projet :
 
 Saisir la commande ci-dessous dans la console :
 
@@ -26,7 +28,7 @@ Saisir la commande ci-dessous dans la console :
 composer install
 ```
 
-- 3 Générer vos clés de chiffrement
+- 4 Générer vos clés de chiffrement **RSA**
 
 Saisir les commandes ci-dessous dans la console :
 
@@ -35,7 +37,7 @@ openssl genrsa -out private.pem 2048
 openssl rsa -in private.pem -pubout -out public.pem
 ```
 
-- 4 Modifier le fichier env.local.php
+- 5 Modifier le fichier **env.local.php**
 
 Ajouter les lignes ci-dessous :
 
@@ -46,6 +48,6 @@ const TOKEN_VALIDITY = 60;
 const TOKEN_KEY = "coller-ici le contenu de votre clé publique"
 ```
 
-- 5 Tester les EndPoints API avec bruno :
+- 6 Tester les EndPoints API avec **Bruno** :
 
 Importer le dossier api dans Bruno (racine du projet -> importer une collection)
