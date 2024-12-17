@@ -16,7 +16,7 @@ $path = $url['path'] ??  '/';
 
 //Récupération de la méthode de la requête
 $requestMethod = $_SERVER['REQUEST_METHOD'];
-
+//dd(trim($path, BASE_URL ));
 //importer les classes
 use App\Controller\UserController;
 use App\Utils\Tools;
@@ -25,7 +25,7 @@ use App\Utils\Tools;
 $userController = new UserController();
 
 //routeur
-switch (trim($path, BASE_URL )) {
+switch ( substr($path, strlen(BASE_URL))) {
     case '':
         Tools::JsonResponse(["Message"=>"Bienvenue sur notre API"], 200);
         break;
