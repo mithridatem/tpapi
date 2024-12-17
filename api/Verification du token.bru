@@ -1,0 +1,15 @@
+meta {
+  name: Verification du token
+  type: http
+  seq: 6
+}
+
+get {
+  url: http://localhost/tpapi/user/token
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzQ0NzczMTMsImlzcyI6InlvdXIuZG9tYWluLm5hbWUiLCJuYmYiOjE3MzQ0NzczMTMsImV4cCI6MTczNDQ4MDkxMywidXNlcklkIjoxLCJ1c2VyTGFzdG5hbWUiOiJNaXRocmlkYXRlIiwidXNlckZpcnN0bmFtZSI6Ik1hdGhpZXUifQ.iacpHGNkxDb_op7-Wro7iEw50DE6Jetwj8e6wtGHjxvfVXHLuDzUGJuktT5m6coiN3ndct70JVVdoRUaKLpkVw
+}
