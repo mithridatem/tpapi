@@ -19,7 +19,7 @@ class UserController
     {
         //récupérer le body de la requête
         $json = Tools::getBody();
-        
+        //tester si le json est vide
         if($json == '""'){
             Tools::JsonResponse(["message"=>"Le corps de la requête est vide"], 400);
             exit;
@@ -31,13 +31,16 @@ class UserController
         $user->hydrate($tab);
         //on hash le password
         $user->hashPassword();
-    
-        if(!$this->repository->findEmail($user->getEmail())) {
+        //on récupérer si le compte existe déjà
+        $test = $this->repository->findEmail($user->getEmail());
+        //tester si l'email existe déjà
+        if($test) {
             Tools::JsonResponse(["Message"=>"Cet email existe déjà"], 400);
             exit;
         }
         //je crée le compte
         $newUser = $this->repository->add($user);
+        //retourne une Réponse JSON
         Tools::JsonResponse(["Utilisateur"=>$newUser->toArray()], 200);
     }
 

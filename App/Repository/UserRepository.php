@@ -96,16 +96,16 @@ class UserRepository
         try {
             $sql = "SELECT u.id, u.lastname, u.firstname, u.email FROM user AS u WHERE u.email= ?";
             $requete = self::$bdd->prepare($sql);
-            $requete->bindParam(1, $e, \PDO::PARAM_STR);
+            $requete->bindParam(1, $email, \PDO::PARAM_STR);
             $requete->execute();
             $requete->setFetchMode(\PDO::FETCH_CLASS| \PDO::FETCH_PROPS_LATE, User::class);
             $user = $requete->fetch();
-
+            
             //Tester si l'utilisateur existe
             if($user){
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
         catch(\PDOException $e) {
             die("Error" . $e->getMessage());
