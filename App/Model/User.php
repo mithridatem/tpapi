@@ -71,8 +71,8 @@ class User
     }
 
     //Méthode qui vérifie le mot de passe
-    public function verifPassword(string $clear) :bool {
-        return password_verify($clear, $this->password);
+    public function verifPassword(string $plainPassword) :bool {
+        return password_verify($plainPassword, $this->password);
     }
 
     //Méthode qui retourne le nom et prénom de l'objet User

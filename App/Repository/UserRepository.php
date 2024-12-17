@@ -16,7 +16,6 @@ class UserRepository
         self::$bdd = Bdd::connexion();
     }
 
-
     //Méthodes
     //Méthode pour ajouter un utilisateur en BDD 
     public function add(User $user): User
@@ -54,6 +53,7 @@ class UserRepository
         return $user;
     }
 
+    //Méthode pour récupére tous les utilisateurs en BDD
     public function findAll(): array
     {
         try {
@@ -72,6 +72,7 @@ class UserRepository
         }
     }
 
+    //Méthode pour récupérer un utilisateur par son id en BDD
     public function find(int $id): User | bool
     {
         try {
@@ -87,6 +88,7 @@ class UserRepository
         }
     }
 
+    //Méthode pour récupérer un utilisateur par son email en BDD
     public function findEmail(string $email): User | bool
     {
         try {
