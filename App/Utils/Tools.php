@@ -25,7 +25,7 @@ class Tools
     }
 
     //Méthode qui nettoie une chaine de caractéres
-    public static function cleanInput(string $input): string{
+    public static function sanitize(string $input): string{
         $input = trim($input);
         $input = strip_tags($input);
         $input = htmlspecialchars($input, ENT_NOQUOTES);
@@ -33,10 +33,10 @@ class Tools
     }
 
     //Méthode qui nettoie un tableau de données
-    public static function cleanData(array $data): array{
+    public static function sanitizeArray(array $data): array{
         $cleanData = [];
         foreach ($data as $key => $value) {
-            $cleanData[$key] = self::cleanInput($value);
+            $cleanData[$key] = self::sanitize($value);
         }
         return $cleanData;
     }

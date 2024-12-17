@@ -29,7 +29,7 @@ class UserController
         //décoder le json en tableau associatif
         $tab = json_decode($json, true);
         //nettoyer le tableau
-        $tab = Tools::cleanData($tab);
+        $tab = Tools::sanitizeArray($tab);
         //créer un objet User
         $user = new User();
         //on hydrate l'objet User
