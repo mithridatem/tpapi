@@ -46,7 +46,7 @@ class UserController
         if ($test) {
             $message = ["Message" => "Cet email existe déjà"];
             $statusCode = 400;
-        } 
+        }
         //Sinon on crée le compte
         else {
             //on crée le compte
@@ -157,7 +157,7 @@ class UserController
         if ($bearer == null) {
             $message = ["Message" => "Token absent"];
             $statusCode = 400;
-        } 
+        }
         //sinon
         else {
             //recupération de la verif du token
@@ -172,7 +172,7 @@ class UserController
                 $statusCode = 403;
             }
         }
-         //retourne une Réponse JSON
-         Tools::JsonResponse($message, $statusCode);
+        //retourne une Réponse JSON
+        Tools::JsonResponse($message, $statusCode);
     }
 }
