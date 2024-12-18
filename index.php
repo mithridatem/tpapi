@@ -39,7 +39,7 @@ $router->addRoute(new Route('', 'GET', 'Home', 'home'));
 $router->addRoute(new Route('user', 'GET', 'User', 'showAll'));
 $router->addRoute(new Route('user', 'POST', 'User', 'save'));
 $router->addRoute(new Route('user/id', 'GET', 'User', 'showUser'));
-$router->addRoute(new Route('user/token', 'GET', 'User', 'getUserToken', $bearer));
+$router->addRoute(new Route('user/token', 'GET', 'User', 'verifyUserToken', $bearer));
 $router->addRoute(new Route('user/token', 'POST', 'User', 'getUserToken'));
 $router->addRoute(new Route('user/me', 'GET', 'User', 'showMe', $bearer));
 
