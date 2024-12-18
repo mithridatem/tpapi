@@ -61,13 +61,17 @@ afin de simplifier la création de Nouveau EndPoint.
 
 ```php
 //Exemple d'ajout d'une nouvelle route sans paramètres
-/*On passe les paramètres suivants 
-l'url de la route(découpé par la taille du base url dans env.local.php),
+/*
+On passe les paramètres suivants 
+l'url de la route(découpée par la taille de la constante BASE_URL dans env.local.php),
 la méthode HTTP, le nom du controller (sans Controller à la fin), 
-le nom de la fonction qui se trouve dans le controller*/
+le nom de la fonction qui se trouve dans le controller
+*/
+
 $router->addRoute(new Route('test', 'GET', 'Test', 'fonction'));
 
 //Exemple d'ajout d'une nouvelle route avec un paramètre
+
 $router->addRoute(new Route('test', 'GET', 'Test', 'fonction', 'valeur'));
 
 ```
