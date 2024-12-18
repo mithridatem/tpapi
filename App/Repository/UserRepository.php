@@ -53,7 +53,7 @@ class UserRepository
         return $user;
     }
 
-    //Méthode pour récupére tous les utilisateurs en BDD
+    //Méthode pour récupérer tous les utilisateurs en BDD
     public function findAll(): array
     {
         try {

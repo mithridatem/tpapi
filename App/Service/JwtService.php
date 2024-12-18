@@ -52,10 +52,11 @@ class JwtService
             'iat'  => $issuedAt->getTimestamp(),         // Timestamp génération du token
             'iss'  => $serverName,                       // Serveur
             'nbf'  => $issuedAt->getTimestamp(),         // Timestamp empécher date antérieure
-            'exp'  => $expire,
-            'userId' => $user->getId(),                           // Timestamp expiration du token
-            'userLastname' => $user->getLastname(),
-            'userFirstname' => $user->getFirstname()
+            'exp'  => $expire,                           // Timestamp expiration du token
+            'id' => $user->getId(),
+            'lastname' => $user->getLastname(),
+            'firstname' => $user->getFirstname(),
+            'email' => $user->getEmail()
         ];
         //retourne le JWT token encode
         $token = JWT::encode(
@@ -69,7 +70,6 @@ class JwtService
     //Vérification du token
     public function verifyToken(string $jwt): bool|string
     {
-
         try {
             //Décodage du token
             JWT::decode($jwt, new Key($this->key, 'HS512'));

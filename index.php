@@ -90,6 +90,16 @@ switch (substr($path, strlen(BASE_URL))) {
             Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
         }
         break;
+    case 'user/me':
+        //Test de la méthode GET
+        if ($requestMethod === 'GET') {
+            $userController->showMe($bearer);
+        }
+        //Sinon la méthode n'est pas autorisée
+        else {
+            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
+        }
+        break;
     default:
         Tools::JsonResponse(["Message" => "Erreur 404"], 404);
         break;
