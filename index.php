@@ -83,7 +83,7 @@ switch (substr($path, strlen(BASE_URL))) {
         }
         //test de la méthode GET (vérification du token JWT)
         else if ($requestMethod === 'GET') {
-            $userController->verifyToken($bearer);
+            $userController->verifyUserToken($bearer);
         }
         //Sinon la méthode n'est pas autorisée
         else {

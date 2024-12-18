@@ -25,8 +25,8 @@ class UserController
     {
         $message = [];
         $statusCode = 200;
-        //récupérer le body de la requête
-        $json = Tools::getBody();
+        //récupérer le corp de la requête
+        $json = Tools::getRequestBody();
         //tester si le json est vide
         if ($json == '""') {
             $message = ["message" => "Le corps de la requête est vide"];
@@ -115,8 +115,8 @@ class UserController
     {
         $message = [];
         $statusCode = 200;
-        //récupérer le body de la requête
-        $json = Tools::getBody();
+        //récupérer le corp de la requête
+        $json = Tools::getRequestBody();
         //tester si le json est vide
         if ($json == '""') {
             $message = ["message" => "Le corps de la requête est vide"];
@@ -149,7 +149,7 @@ class UserController
     }
 
     //Méthode pour vérifier le token JWT
-    public function verifyToken(?string $bearer)
+    public function verifyUserToken(?string $bearer)
     {
         $message = [];
         $statusCode = 200;

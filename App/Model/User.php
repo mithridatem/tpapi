@@ -71,7 +71,7 @@ class User
     }
 
     //Méthode qui vérifie le mot de passe
-    public function verifPassword(string $plainPassword) :bool {
+    public function verifyPassword(string $plainPassword) :bool {
         return password_verify($plainPassword, $this->password);
     }
 

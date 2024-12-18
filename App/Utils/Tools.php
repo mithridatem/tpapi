@@ -14,13 +14,13 @@ class Tools
     }
     
     //Méthode qui convertie une chaine de caractéres en UTF-8
-    public static function convertUtf8(string $chaine): string
+    public static function utf8Encode(string $str): string
     {
   
         return mb_convert_encoding(
-            $chaine,
+            $str,
             "UTF-8",
-            mb_detect_encoding($chaine)
+            mb_detect_encoding($str)
         );
     }
 
@@ -41,7 +41,7 @@ class Tools
         return $cleanData;
     }
     //fonction pour récupérer le body de la requête
-    public static function getBody(): bool|string        
+    public static function getRequestBody(): bool|string        
     {
         return file_get_contents('php://input');
     }

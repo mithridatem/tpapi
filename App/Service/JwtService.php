@@ -23,7 +23,7 @@ class JwtService
 
     //Méthodes
     //Authentification
-    public function authentification(string $email, string $password)
+    public function authentification(string $email, string $password): bool
     {
         $email = Tools::sanitize($email);
         $password = Tools::sanitize($password);
@@ -31,7 +31,7 @@ class JwtService
         //test si l'utilisateur existe 
         if ($user) {
             //test si le mot de passe est correct
-            if ($user->verifPassword($password)) {
+            if ($user->verifyPassword($password)) {
                 return true;
             }
         }
