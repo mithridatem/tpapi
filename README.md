@@ -53,10 +53,11 @@ const TOKEN_KEY = "coller-ici le contenu de votre clé publique"
 Importer le dossier api dans Bruno (racine du projet -> importer une collection)
 
 **Nouveautés** :
-Mise en place d'un nouveau système de routet avec des classe Router et Route 
+
+Mise en place d'un nouveau système de routage avec les classes Router et Route 
 afin de simplifier la création de Nouveau EndPoint.
 
-Pour ajouter une nouvelle route au projet :
+*Pour ajouter une nouvelle route au projet* :
 
 ```php
 //Exemple d'ajout d'une nouvelle route sans paramètres

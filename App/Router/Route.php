@@ -2,7 +2,8 @@
 
 namespace App\Router;
 
-class Route{
+class Route
+{
     //Attributs
     private ?string $url;
     private ?string $httpMethod;
