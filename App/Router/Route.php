@@ -42,7 +42,7 @@ class Route
     {
         return $this->param;
     }
-    
+
     public function getRequestMethod(): string
     {
         return $this->httpMethod;
