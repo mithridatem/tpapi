@@ -27,7 +27,7 @@ class JwtService
     {
         $email = Tools::sanitize($email);
         $password = Tools::sanitize($password);
-        $user = $this->userRepository->findEmail($email);
+        $user = $this->userRepository->findByEmail($email);
         //test si l'utilisateur existe 
         if ($user) {
             //test si le mot de passe est correct
@@ -46,7 +46,7 @@ class JwtService
         $issuedAt   = new \DateTimeImmutable();
         $expire     = $issuedAt->modify('+' . TOKEN_VALIDITY . ' minutes')->getTimestamp();
         $serverName = "your.domain.name";
-        $user = $this->userRepository->findEmail($email);
+        $user = $this->userRepository->findByEmail($email);
         //Contenu du token
         $payload = [
             'iat'  => $issuedAt->getTimestamp(),         // Timestamp génération du token

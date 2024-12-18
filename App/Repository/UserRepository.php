@@ -89,7 +89,7 @@ class UserRepository
     }
 
     //Méthode pour récupérer un utilisateur par son email en BDD
-    public function findEmail(string $email): User | bool
+    public function findByEmail(string $email): User | bool
     {
         try {
             $sql = "SELECT u.id, u.lastname, u.firstname, u.email, u.password FROM user AS u WHERE u.email= ?";

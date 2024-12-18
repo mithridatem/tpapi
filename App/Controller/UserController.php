@@ -41,7 +41,7 @@ class UserController
         //on hash le password
         $user->hashPassword();
         //on récupérer si le compte existe déjà
-        $test = $this->repository->findEmail($user->getEmail());
+        $test = $this->repository->findByEmail($user->getEmail());
         //tester si le compte existe déjà
         if ($test) {
             $message = ["Message" => "Cet email existe déjà"];
