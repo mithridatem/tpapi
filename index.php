@@ -14,9 +14,6 @@ $url = parse_url($_SERVER['REQUEST_URI']);
 //test si l'url posséde une route sinon on renvoi à la racine
 $path = $url['path'] ??  '/';
 
-//Récupération de la méthode de la requête
-$requestMethod = $_SERVER['REQUEST_METHOD'];
-
 //Récupération du token JWT
 $bearer = isset($_SERVER['HTTP_AUTHORIZATION']) ? preg_replace(
     '/Bearer\s+/',
@@ -25,82 +22,26 @@ $bearer = isset($_SERVER['HTTP_AUTHORIZATION']) ? preg_replace(
 ) : null;
 
 //importer les classes
+use App\Router\Router;
+use App\Router\Route;
 use App\Controller\UserController;
-use App\Utils\Tools;
+use App\Controller\HomeController;
 
 //instance des Controllers
 $userController = new UserController();
+$homeController = new HomeController();
 
-//routeur
-switch (substr($path, strlen(BASE_URL))) {
-        //Endpoint Home
-    case '':
-        Tools::JsonResponse(["Message" => "Bienvenue sur notre API"], 200);
-        break;
-        //Endpoint User
-    case 'user':
-        //Test de la méthode GET
-        if ($requestMethod === 'GET') {
-            $userController->showAll();
-        }
-        //Test de la méthode POST
-        else if ($requestMethod === 'POST') {
-            $userController->save();
-        }
-        //Test de la méthode DELETE
-        else if ($requestMethod === 'DELETE') {
-            Tools::JsonResponse(["Message" => "Suppression de tous les utilisateurs"], 200);
-        }
-        //Sinon la méthode n'est pas autorisée
-        else {
-            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
-        }
-        break;
-        //Endpoint User/id
-    case 'user/id':
-        //Test de la méthode GET
-        if ($requestMethod === 'GET') {
-            $userController->showUser();
-        }
-        //Test de la méthode PATCH
-        else if ($requestMethod === 'PATCH') {
-            Tools::JsonResponse(["Message" => "Utilisateur mis à jour par son id"], 200);
-        }
-        //Test de la méthode DELETE
-        else if ($requestMethod === 'DELETE') {
-            Tools::JsonResponse(["Message" => "Utilisateur supprimé par son id"], 200);
-        }
-        //Sinon la méthode n'est pas autorisée
-        else {
-            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
-        }
-        break;
-        //Endpoint token JWT
-    case 'user/token':
-        //Test de la méthode POST(recupération du token JWT)
-        if ($requestMethod === 'POST') {
-            $userController->getUserToken();
-        }
-        //test de la méthode GET (vérification du token JWT)
-        else if ($requestMethod === 'GET') {
-            $userController->verifyUserToken($bearer);
-        }
-        //Sinon la méthode n'est pas autorisée
-        else {
-            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
-        }
-        break;
-    case 'user/me':
-        //Test de la méthode GET
-        if ($requestMethod === 'GET') {
-            $userController->showMe($bearer);
-        }
-        //Sinon la méthode n'est pas autorisée
-        else {
-            Tools::JsonResponse(["Message" => "Méthode non autorisée"], 405);
-        }
-        break;
-    default:
-        Tools::JsonResponse(["Message" => "Erreur 404"], 404);
-        break;
-}
+//Instance du Router
+$router = new Router(substr($path, strlen(BASE_URL)), $bearer);
+
+//Ajout des routes
+$router->addRoute(new Route('', 'GET', 'Home', 'home'));
+$router->addRoute(new Route('user', 'GET', 'User', 'showAll'));
+$router->addRoute(new Route('user', 'POST', 'User', 'save'));
+$router->addRoute(new Route('user/id', 'GET', 'User', 'showUser'));
+$router->addRoute(new Route('user/token', 'GET', 'User', 'getUserToken', $bearer));
+$router->addRoute(new Route('user/token', 'POST', 'User', 'getUserToken'));
+$router->addRoute(new Route('user/me', 'GET', 'User', 'showMe', $bearer));
+
+//Lancement du Router
+$router->run();

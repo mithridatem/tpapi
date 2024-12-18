@@ -51,3 +51,23 @@ const TOKEN_KEY = "coller-ici le contenu de votre clé publique"
 - 6 Tester les EndPoints API avec **Bruno** :
 
 Importer le dossier api dans Bruno (racine du projet -> importer une collection)
+
+**Nouveautés** :
+Mise en place d'un nouveau système de routet avec des classe Router et Route 
+afin de simplifier la création de Nouveau EndPoint.
+
+Pour ajouter une nouvelle route au projet :
+
+```php
+//Exemple d'ajout d'une nouvelle route sans paramètres
+/*On passe les paramètres suivants 
+l'url de la route(découpé par la taille du base url dans env.local.php),
+la méthode HTTP, le nom du controller (sans Controller à la fin), 
+le nom de la fonction qui se trouve dans le controller*/
+$router->addRoute(new Route('test', 'GET', 'Test', 'fonction'));
+
+//Exemple d'ajout d'une nouvelle route avec un paramètre
+$router->addRoute(new Route('test', 'GET', 'Test', 'fonction', 'valeur'));
+
+```
+**NB** : Ajouter les routes avant le lancement du routeur ($router->run()).

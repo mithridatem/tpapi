@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use App\Controller\UserController;
+
 class Tools
 {
     //Méthode qui retourne une réponse JSON
@@ -12,11 +14,11 @@ class Tools
         http_response_code($status);
         echo json_encode($data);
     }
-    
+
     //Méthode qui convertie une chaine de caractéres en UTF-8
     public static function utf8Encode(string $str): string
     {
-  
+
         return mb_convert_encoding(
             $str,
             "UTF-8",
@@ -25,7 +27,8 @@ class Tools
     }
 
     //Méthode qui nettoie une chaine de caractéres
-    public static function sanitize(string $input): string{
+    public static function sanitize(string $input): string
+    {
         $input = trim($input);
         $input = strip_tags($input);
         $input = htmlspecialchars($input, ENT_NOQUOTES);
@@ -33,7 +36,8 @@ class Tools
     }
 
     //Méthode qui nettoie un tableau de données
-    public static function sanitizeArray(array $data): array{
+    public static function sanitizeArray(array $data): array
+    {
         $cleanData = [];
         foreach ($data as $key => $value) {
             $cleanData[$key] = self::sanitize($value);
@@ -41,7 +45,7 @@ class Tools
         return $cleanData;
     }
     //fonction pour récupérer le body de la requête
-    public static function getRequestBody(): bool|string        
+    public static function getRequestBody(): bool|string
     {
         return file_get_contents('php://input');
     }
