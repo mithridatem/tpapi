@@ -8,7 +8,7 @@ use App\Utils\Tools;
 class Router
 {
     private ?string $path;
-
+    
     private array $routes = [];
 
     public function __construct(string $path)
