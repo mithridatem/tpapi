@@ -32,7 +32,7 @@ $userController = new UserController();
 $homeController = new HomeController();
 
 //Instance du Router
-$router = new Router(substr($path, strlen(BASE_URL)));
+$router = new Router(substr($path, strlen(BASE_URL)), $bearer); 
 
 //Ajout des routes
 $router->addRoute(new Route('', 'GET', 'Home', 'home'));

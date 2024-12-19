@@ -8,18 +8,24 @@ use App\Utils\Tools;
 class Router
 {
     private ?string $path;
-    
+    private ?string $bearer;
     private array $routes = [];
 
-    public function __construct(string $path)
+    public function __construct(string $path, ?string $bearer)
     {
         $this->path = $path;
+        $this->bearer = $bearer;
     }
 
     //Getters
     public function getPath(): string|null
     {
         return $this->path;
+    }
+
+    public function getBearer(): string|null
+    {
+        return $this->bearer;
     }
 
     //Méthode pour ajouter une route
