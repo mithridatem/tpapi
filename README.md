@@ -45,7 +45,7 @@ Ajouter les lignes ci-dessous :
 //Temps de validitée du token JWT en minutes
 const TOKEN_VALIDITY = 60;
 //Clé de chiffrement du token JWT
-const TOKEN_KEY = "coller-ici le contenu de votre clé publique"
+const TOKEN_SECRET_KEY = "coller-ici le contenu de votre clé publique"
 ```
 
 - 6 Tester les EndPoints API avec **Bruno** :
