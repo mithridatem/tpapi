@@ -13,8 +13,8 @@ const DB_HOST = "url du serveur de BDD";
 const DB_NAME = "nom de la BDD";
 const DB_USER = "login de la BDD";
 const DB_PASSWORD = "password de la BDD";
-//base URL
-const BASE_URL = '/tpapi/';
+//base URL (/nom_dossier dans apache)
+const BASE_URL = '/tpapi';
 
 ```
 
