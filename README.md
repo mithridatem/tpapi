@@ -1,10 +1,13 @@
 # tpapi
-Pour utiliser ce projet vous devez 
+Pour utiliser ce projet vous devez :
+
 **Prérequis** :
+````txt
 -php 8.2 +
 -MYSql MariaDB,
 -apache 2 +
 -composer 2.7 +
+```
 
 - 1 cloner le repository dans votre racine apache
 
