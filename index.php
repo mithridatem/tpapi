@@ -21,27 +21,22 @@ $bearer = isset($_SERVER['HTTP_AUTHORIZATION']) ? preg_replace(
     $_SERVER['HTTP_AUTHORIZATION']
 ) : null;
 
-//importer les classes
+//importer les classes du router
 use App\Router\Router;
 use App\Router\Route;
-use App\Controller\UserController;
-use App\Controller\HomeController;
-
-//instance des Controllers
-$userController = new UserController();
-$homeController = new HomeController();
 
 //Instance du Router
 $router = new Router(substr($path, strlen(BASE_URL)), $bearer); 
 
 //Ajout des routes
-$router->addRoute(new Route('', 'GET', 'Home', 'home'));
-$router->addRoute(new Route('user', 'GET', 'User', 'showAll'));
-$router->addRoute(new Route('user', 'POST', 'User', 'save'));
-$router->addRoute(new Route('user/id', 'GET', 'User', 'showUser'));
-$router->addRoute(new Route('user/token', 'GET', 'User', 'verifyUserToken', $bearer));
-$router->addRoute(new Route('user/token', 'POST', 'User', 'getUserToken'));
-$router->addRoute(new Route('user/me', 'GET', 'User', 'showMe', $bearer));
+$router->addRoute(new Route('/', 'GET', 'Home', 'home'));
+$router->addRoute(new Route('/user', 'GET', 'User', 'showAll'));
+$router->addRoute(new Route('/user', 'POST', 'User', 'save'));
+$router->addRoute(new Route('/user/id', 'GET', 'User', 'showUser'));
+$router->addRoute(new Route('/user/token', 'GET', 'User', 'verifyUserToken', [$bearer]));
+$router->addRoute(new Route('/user/token', 'POST', 'User', 'getUserToken'));
+$router->addRoute(new Route('/user/me', 'GET', 'User', 'showMe', [$bearer]));
+$router->addRoute(new Route('/user/me2', 'GET', 'User', 'showMeV2'));
 
 //Lancement du Router
 $router->run();
