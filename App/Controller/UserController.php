@@ -84,7 +84,7 @@ class UserController
     }
 
     //Méthode pour afficher un utilisateur par son id
-    public function showUser(): void
+    public function showUser()
     {
         $message = [];
         $statusCode = 200;
@@ -107,7 +107,7 @@ class UserController
             $message = ["Erreur" => "Le paramètre id n'existe pas"];
             $statusCode = 404;
         }
-        Tools::JsonResponse($message, $statusCode);
+        return Tools::JsonResponse($message, $statusCode);
     }
 
     //Méthode pour Récupérer le token JWT
@@ -183,6 +183,44 @@ class UserController
         $statusCode = 200;
         //tester si le token est vide
         if ($bearer == null) {
+            $message = ["Message" => "Token absent"];
+            $statusCode = 400;
+        }
+        //sinon
+        else {
+            //recupération de la verif du token
+            $verif = $this->jwtService->verifyToken($bearer);
+            //tester si le token est valide
+            if ($verif === true) {
+                //recupération des données du token
+                $data = $this->jwtService->getDataFromToken($bearer);
+                //recupération de l'utilisateur
+                $user = $this->repository->find($data->id);
+                $message = $user->toArray();
+            }
+            //Sinon je retourne l'erreur du token
+            else {
+                $message = ["Message" => $verif];
+                $statusCode = 403;
+            }
+        }
+        //retourne une Réponse JSON
+        Tools::JsonResponse($message, $statusCode);
+    }
+
+    //Méthode pour afficher les informations de l'utilisateur V2
+    public function showMeV2()
+    {
+        //Récupération du token JWT
+        $bearer = isset($_SERVER['HTTP_AUTHORIZATION']) ? preg_replace(
+            '/Bearer\s+/',
+            '',
+            $_SERVER['HTTP_AUTHORIZATION']
+        ) : null;
+        $message = [];
+        $statusCode = 200;
+        //tester si le token est vide
+        if ($bearer === null) {
             $message = ["Message" => "Token absent"];
             $statusCode = 400;
         }

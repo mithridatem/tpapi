@@ -55,12 +55,13 @@ class Router
                 $method = $route->getMethod();
                 $params = $route->getParams();
                 //Test si la route ne posséde pas des paramétres
-                if ($params === null) {
+                if (empty($params)) {
                     $controller->$method();
                     return;
                 }
                 //sinon on lance la méthode avec les paramétres
-                $controller->$method($params);
+                call_user_func_array([$controller, $method], $params);
+                //$controller->$method($params);
                 return;
             }
         }

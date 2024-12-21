@@ -9,17 +9,19 @@ class Route
     private ?string $httpMethod;
     private ?string $controller;
     private ?string $method;
-    private ?string $param;
+    private array $param = [];
 
     //Méthodes
     //Constructeur
-    public function __construct(string $url, string $httpMethod, string $controller, string $method, ?string $param = null)
+    public function __construct(string $url, string $httpMethod, string $controller, string $method, ?array $param = [])
     {
         $this->url = $url;
         $this->httpMethod = $httpMethod;
         $this->controller = $controller;
         $this->method = $method;
-        $this->param = $param;
+        if($param){
+            $this->addParams($param);
+        } 
     }
 
     //Getters
@@ -38,7 +40,7 @@ class Route
         return $this->method;
     }
 
-    public function getParams(): ?string
+    public function getParams(): array
     {
         return $this->param;
     }
@@ -63,10 +65,12 @@ class Route
     {
         $this->method = $method;
     }
-
-    public function setParams(string $param): void
+    
+    public function addParams(array $params): void
     {
-        $this->param = $param;
+        foreach ($params as $param) {
+            $this->param[] = $param;
+        }
     }
 
     public function setRequestMethod(string $httpMethod): void
