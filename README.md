@@ -2,7 +2,8 @@
 Pour utiliser ce projet vous devez :
 
 **Prérequis** :
-````txt
+
+```txt
 -php 8.2 +
 -MYSql MariaDB,
 -apache 2 +
