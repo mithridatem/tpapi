@@ -72,7 +72,7 @@ $router->addRoute(new Route('test', 'GET', 'Test', 'fonction'));
 
 //Exemple d'ajout d'une nouvelle route avec un paramètre
 
-$router->addRoute(new Route('test', 'GET', 'Test', 'fonction', 'valeur'));
+$router->addRoute(new Route('test', 'GET', 'Test', 'fonction', ['valeur1', ...]));
 
 ```
 **NB** : Ajouter les routes avant le lancement du routeur ($router->run()).
